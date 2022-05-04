@@ -1,6 +1,12 @@
-const regexes = [
-  /.*\(([0-9]+|.)\).*/, // Rocket.Chat, WhatsApp etc.
-  /.*Nachricht.+gesendet.*/, // Hangouts
+const captions = [
+  {
+    regex: /.*\(([0 - 9] +|.) \).*/, // Rocket.Chat, WhatsApp etc.
+    attention: true,
+  },
+  {
+    regex: /.*Nachricht.+gesendet.*/, // Hangouts
+    attention: false,
+  },
 ];
 const classes = /.*crx_(.*).*/;
 const alnum = /[0-9]+/;
@@ -20,15 +26,15 @@ function captionWatcher(client) {
     const name = `chrome-${
       client.resourceClass.toString().match(classes)[1]
     }-Default`;
-    const active = regexes.reduce(
-      (previous, regex) => previous || regex.test(client.caption),
+    const active = captions.reduce(
+      (previous, caption) => previous || caption.regex.test(client.caption),
       false
     );
     let count = "0";
 
     if (active) {
-      for (const regex of regexes) {
-        count = client.caption.match(regex);
+      for (const caption of captions) {
+        count = client.caption.match(caption.regex);
 
         if (!count) {
           continue;
@@ -38,11 +44,15 @@ function captionWatcher(client) {
         if (!alnum.test(count)) {
           count = "1";
         }
+
+        if (caption.attention) {
+          client.demandsAttention = true;
+        }
+
         break;
       }
     }
 
-    client.demandsAttention = active;
     callDBus(
       "org.kde.lattedock",
       "/Latte",
