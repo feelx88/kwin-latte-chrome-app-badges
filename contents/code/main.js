@@ -34,7 +34,7 @@ function captionWatcher(client) {
           continue;
         }
 
-        count = [1].toString();
+        count = count[1].toString();
         if (!alnum.test(count)) {
           count = "1";
         }
