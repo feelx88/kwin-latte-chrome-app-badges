@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Latte Chrome App Badges
+Comment=KWin Script for showing Latte Dock counter badges for Chrome Apps.
+Icon=preferences-system-windows
+
+X-KDE-PluginInfo-Author=Felix Müller
+X-KDE-PluginInfo-Email=feelx88@googlemail.com
+X-KDE-PluginInfo-Name=kwin-latte-chrome-app-badges
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-License=GPL
+
+Type=Service
+X-KDE-ServiceTypes=KWin/Script
+X-Plasma-API=javascript
+X-Plasma-MainScript=code/main.js
