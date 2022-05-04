@@ -4,7 +4,7 @@ const captions = [
     attention: true,
   },
   {
-    regex: /.*Nachricht.+gesendet.*/, // Hangouts
+    regex: /.*(Nachricht).+gesendet.*/, // Hangouts
     attention: false,
   },
 ];
