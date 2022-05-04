@@ -1,4 +1,7 @@
-const regex = /.*\(([0-9]+|.)\).*/;
+const regexes = [
+  /.*\(([0-9]+|.)\).*/, // Rocket.Chat, WhatsApp etc.
+  /.*Nachricht.+gesendet.*/, // Hangouts
+];
 const classes = /.*crx_(.*).*/;
 const alnum = /[0-9]+/;
 
@@ -17,13 +20,24 @@ function captionWatcher(client) {
     const name = `chrome-${
       client.resourceClass.toString().match(classes)[1]
     }-Default`;
-    const active = regex.test(client.caption);
+    const active = regexes.reduce(
+      (previous, regex) => previous || regex.test(client.caption),
+      false
+    );
     let count = "0";
 
     if (active) {
-      count = client.caption.match(regex)[1].toString();
-      if (!alnum.test(count)) {
-        count = "1";
+      for (const regex of regexes) {
+        count = client.caption.match(regex);
+
+        if (!count) {
+          continue;
+        }
+
+        count = [1].toString();
+        if (!alnum.test(count)) {
+          count = "1";
+        }
       }
     }
 
