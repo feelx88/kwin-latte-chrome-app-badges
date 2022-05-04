@@ -38,6 +38,7 @@ function captionWatcher(client) {
         if (!alnum.test(count)) {
           count = "1";
         }
+        break;
       }
     }
 
