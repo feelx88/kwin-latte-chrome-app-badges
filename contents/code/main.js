@@ -1,6 +1,6 @@
 const captions = [
   {
-    regex: /.*\(([0 - 9] +|.) \).*/, // Rocket.Chat, WhatsApp etc.
+    regex: /.*\(([0-9]+|.)\).*/, // Rocket.Chat, WhatsApp etc.
     attention: true,
   },
   {
