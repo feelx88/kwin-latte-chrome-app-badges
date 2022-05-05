@@ -12,17 +12,17 @@ const classes = /.*crx_(.*).*/;
 const alnum = /[0-9]+/;
 
 function clientListener(client) {
-  // Only match chrome windows
-  if (!classes.test(client.resourceClass)) {
-    return;
-  }
-
   client.captionChanged.connect(captionWatcher(client));
   captionWatcher(client)();
 }
 
 function captionWatcher(client) {
   return function () {
+    // Only match chrome windows
+    if (!classes.test(client.resourceClass)) {
+      return;
+    }
+
     const name = `chrome-${
       client.resourceClass.toString().match(classes)[1]
     }-Default`;
